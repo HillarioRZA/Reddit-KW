@@ -9,6 +9,7 @@ const commentController = require('./controllers/commentController');
 const commentRoutes = require('./routes/commentRoutes');
 const voteRoutes = require('./routes/voteRoutes');
 const userTopicFollowRoutes = require('./routes/userTopicFollowRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 const app = express();
 const server = http.createServer(app);
@@ -30,6 +31,7 @@ app.use('/api/topics', topicRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/votes', voteRoutes(io));
 app.use('/api/user-topic-follows', userTopicFollowRoutes);
+app.use('/api/categories', categoryRoutes); 
 
 // Database connection
 connectDB();
