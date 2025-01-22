@@ -1,11 +1,11 @@
 const express = require('express');
+const router = express.Router();
 const { createVote, getVotesByReferenceId, deleteVote } = require('../controllers/voteController');
 
-const router = express.Router();
+module.exports = (io) => {
+  router.post('/', (req, res) => createVote(req, res, io)); // Inject io
+  router.get('/:referenceId/:referenceType', getVotesByReferenceId);
+  router.delete('/:voteId', (req, res) => deleteVote(req, res, io)); // Inject io
 
-// Routes untuk Votes
-router.post('/', createVote); // Buat atau perbarui vote
-router.get('/:referenceId/:referenceType', getVotesByReferenceId); // Ambil semua vote berdasarkan referensi
-router.delete('/:voteId', deleteVote); // Hapus vote
-
-module.exports = router;
+  return router;
+};
