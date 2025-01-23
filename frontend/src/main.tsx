@@ -5,7 +5,7 @@ import App from './App.tsx'
 import { createBrowserRouter, RouterProvider, Navigate} from 'react-router-dom';
 import Login from './pages/login.jsx';
 import Register from './pages/register.jsx';
-import dataHandler from './assets/';
+import dataHandler from './assets/dataHandler.jsx';
 
 const { loadUserList, loadDoctorList, registerUser, loginUser, addAppointment, 
   loadAppointmentDokter, loadAppointmentPasien, pickAppointment, loadSelectedAppointment, 
