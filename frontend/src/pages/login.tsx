@@ -3,28 +3,31 @@ import { useForm } from "react-hook-form";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
 
+interface LoginFormInputs {
+  username: string;
+  password: string;
+}
 
-function Login(){
-    const fetcher = useFetcher();
+function Login() {
+  const fetcher = useFetcher();
 
   const validationSchema = Joi.object({
     username: Joi.string().required().label("Username"),
     password: Joi.string().required().label("Password"),
   });
-  
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<LoginFormInputs>({
     resolver: joiResolver(validationSchema),
   });
 
-  function submitForm(data) {
+  function submitForm(data: LoginFormInputs) {
     fetcher.submit(data, {
-        method: "POST",
-        action: `/login`,
+      method: "POST",
+      action: `/login`,
     });
   }
 
@@ -33,25 +36,37 @@ function Login(){
       <h2>Login</h2>
       <form onSubmit={handleSubmit(submitForm)}>
         <label htmlFor="username">Username</label>
-        <input {...register("username")} type="text" />
+        <input
+          {...register("username")}
+          type="text"
+          id="username"
+          className={errors.username ? "error" : ""}
+        />
         <span>{errors.username?.message}</span>
         <br />
 
         <label htmlFor="password">Password</label>
-        <input {...register("password")} type="password" />
+        <input
+          {...register("password")}
+          type="password"
+          id="password"
+          className={errors.password ? "error" : ""}
+        />
         <span>{errors.password?.message}</span>
         <br />
 
         <button type="submit">Login</button>
       </form>
       <NavLink
-        className={(state) => {
-          return state.isActive ? "text-blue-400" : "text-black" + " px-2 py-1";
-        }}
+        className={({ isActive }) =>
+          `${isActive ? "text-blue-400" : "text-black"} px-2 py-1`
+        }
         to="/register"
-      ><button>Go to Register</button></NavLink>
+      >
+        <button>Go to Register</button>
+      </NavLink>
     </div>
   );
 }
 
-export default Login
+export default Login;

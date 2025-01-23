@@ -3,8 +3,12 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { createBrowserRouter, RouterProvider, Navigate} from 'react-router-dom';
-import Login from './pages/login.jsx';
-import Register from './pages/register.jsx';
+import AdminMenu from './pages/adminMenu.jsx';
+import Admin from './pages/admin.jsx';
+import AdminMedicine from './pages/adminMedicine.jsx';
+import AdminEdit from './pages/adminEdit.jsx';
+import Login from './pages/login.js';
+import Register from './pages/register.js';
 import dataHandler from './assets/dataHandler.jsx';
 
 const { loadUserList, loadDoctorList, registerUser, loginUser, addAppointment, 
@@ -20,6 +24,28 @@ const router = createBrowserRouter([
         index: true,
         element: <Navigate to="/login" replace />,
       },  
+      {
+        path: "/admin",
+        element: <AdminMenu />,
+        children:[
+          {
+            index: true,
+            element: <Admin/>,
+            loader: loadUserList,
+          },
+          {
+            path: "medicine",
+            element: <AdminMedicine/>,
+            loader: loadMedicine,
+            action: addMedicine
+          },
+          {
+            path: "edit",
+            element: <AdminEdit/>,
+            action: editMedicine
+          }
+        ]
+      },
       {
         path: "/login",
         element: <Login />,

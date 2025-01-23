@@ -3,10 +3,20 @@ import { useForm } from "react-hook-form";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
 
+interface RegisterFormData {
+  username: string;
+  name: string;
+  email: string;
+  alamat: string;
+  password: string;
+  confirm: string;
+  role: string;
+}
+
 function Register() {
   const fetcher = useFetcher();
 
-  const validationSchema = Joi.object({
+  const validationSchema = Joi.object<RegisterFormData>({
     username: Joi.string().required().label("Username"),
     name: Joi.string().required().label("Name"),
     email: Joi.string().email({ tlds: { allow: false } }).required().label("Email"),
@@ -32,16 +42,16 @@ function Register() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<RegisterFormData>({
     resolver: joiResolver(validationSchema),
   });
 
-  function submitForm(data) {
+  const submitForm = (data: RegisterFormData) => {
     fetcher.submit(data, {
       method: "POST",
       action: `/register`,
     });
-  }
+  };
 
   return (
     <div>
@@ -92,10 +102,12 @@ function Register() {
       </form>
       <NavLink
         className={(state) => {
-          return state.isActive ? "text-blue-400" : "text-black" + " px-2 py-1";
+          return (state.isActive ? "text-blue-400" : "text-black") + " px-2 py-1";
         }}
         to="/login"
-      ><button>Go to Login</button></NavLink>
+      >
+        <button>Go to Login</button>
+      </NavLink>
     </div>
   );
 }
