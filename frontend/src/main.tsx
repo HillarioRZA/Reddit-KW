@@ -7,9 +7,9 @@ import AdminMenu from './pages/adminMenu.jsx';
 import Admin from './pages/admin.jsx';
 import AdminMedicine from './pages/adminMedicine.jsx';
 import AdminEdit from './pages/adminEdit.jsx';
-import Login from './pages/login.js';
-import Register from './pages/register.js';
-import dataHandler from './assets/dataHandler.jsx';
+import Login from './pages/login.tsx';
+import Register from './pages/register.tsx';
+import dataHandler from './assets/dataHandler.tsx';
 
 const { loadUserList, loadDoctorList, registerUser, loginUser, addAppointment, 
   loadAppointmentDokter, loadAppointmentPasien, pickAppointment, loadSelectedAppointment, 
